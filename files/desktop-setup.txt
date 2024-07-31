@@ -1,0 +1,7 @@
+
+rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+yum update
+yum groupinstall "X Window system"
+yum groupinstall xfce
+systemctl isolate graphical.target
+systemctl set-default graphical.target

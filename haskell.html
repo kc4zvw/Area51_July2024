@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Racket">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The Haskell examples</title>
+
+</head>
+
+<body>
+  <a href="/">HOME</a>
+
+  <br>
+  <h1 class="www_title">The Haskell Project</h1>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</a>
+
+  <div class="www_code">
+  <pre>
+
+~kc4zvw:
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Notes</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Header 2</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Header 3</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">The 'heapsort' Algorithm</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+import Data.Graph.Inductive.Internal.Heap(
+  Heap(..),insert,findMin,deleteMin)
+
+-- heapsort is added in this module as an example application
+
+build :: Ord a => [(a,b)] -> Heap a b
+build = foldr insert Empty
+
+toList :: Ord a => Heap a b -> [(a,b)]
+toList Empty = []
+toList h = x:toList r
+           where (x,r) = (findMin h,deleteMin h)
+
+heapSort :: Ord a => [a] -> [a]
+heapSort = (map fst) . toList . build . map (\x->(x,x))
+
+  </pre>
+  </div>
+
+  <br>
+  <br>
+  <div class="www_code">
+  <pre>
+
+kc4zvw@www:~$ ghci
+GHCi, version 8.8.4: https://www.haskell.org/ghc/  :? for help
+Prelude> :load heapsort.hs
+[1 of 1] Compiling Main             ( heapsort.hs, interpreted )
+Ok, one module loaded.
+*Main> heapSort [9,5,8,2,1,4,6,3,0,7]
+[0,1,2,3,4,5,6,7,8,9]
+*Main> :quit
+Leaving GHCi.
+kc4zvw@www:~$
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <ol>
+    <li>Links ...
+    <li>Links ...
+    <li>Links ...
+  </ol>
+
+  <br />
+  <br />
+  <br />
+  <footer>
+    <div class="quote">
+      <span class="quote2">"A foolish faith in authority is the worst enemy of truth."<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Tuesday, March 21, 2023 at 18:59:21 PM (EDT)</span>
+</body>
+</html>

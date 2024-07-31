@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Oberon">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The Oberon examples</title>
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The Oberon Project</h1>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+
+
+  <h2 class="www_subsection">Example Number One</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+~kc4zvw: cat sample.ob7
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Example Number Two</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+~kc4zvw/Demo/src: cat for1.mod
+(* example of a for loop *)
+
+MODULE for1;
+
+IMPORT Out;
+
+VAR i : LONGINT;
+
+BEGIN
+  FOR i:=1 TO 9 DO
+    Out.LongInt(i,2);
+  END(* FOR *);
+
+  Out.String(' end'); Out.Ln;
+END for1.
+
+(* EOF *)
+  </pre>
+  </div>
+
+  <p>The output ...</p>
+
+  <div class="www_code">
+  <pre>
+
+~kc4zvw/Demo/src: bin/for1
+ 1 2 3 4 5 6 7 8 9 end
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Example Number Three</h2>
+
+  <p>A simple example of variable assignments, calculations and display of variables</p>
+
+
+  <div class="www_code">
+  <pre>
+
+~kc4zvw/Demo/src: cat mile.mod
+
+MODULE mile;
+
+IMPORT Out;
+
+VAR mi, qmi, cm, in, ft, yd, m : REAL;
+
+BEGIN
+ cm := 1.0;
+ m := 100 * cm;
+ in := 2.54 * cm;
+ ft := 12 * in;
+ yd := 3 * ft;
+ mi := 5280 * ft;
+ qmi := mi / 4.0;
+
+ Out.String('A quarter mile is:'); Out.Ln;
+ Out.RealEng(qmi/m, 20, 6); Out.String(' meters'); Out.Ln;
+ Out.RealEng(qmi/yd, 20, 6); Out.String(' yards'); Out.Ln;
+END mile.
+
+  </pre>
+  </div>
+
+  <p>The output ...</p>
+  
+  <div class="www_code">
+  <pre>
+
+ ~kc4zvw/Demo/src: ./bin/mile
+
+ A quarter mile is:
+             402.336 meters
+             440.000 yards
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Example Number Four : a Shellsort</h2>
+
+  <p>The source code for sample003.mod</p>
+  
+  <div class="www_code">
+  <pre>
+
+(* An example of the Shell sort *)
+
+(* $Id: sample003.mod,v 0.22 2024/03/07 18:36:03 kc4zvw Exp kc4zvw $ *)
+
+MODULE sample003;
+
+IMPORT Out, RandomNumbers := ethRandomNumbers;
+
+CONST
+  MaxN = 50;
+
+TYPE
+  Item = LONGINT;
+  array1 = ARRAY MaxN OF Item;
+
+VAR
+  a : array1;
+
+(* Generate a set of random numbers ---  0 .. n-1 *)
+
+PROCEDURE GenerateNum(n: LONGINT): LONGINT;
+
+VAR choice: LONGINT;
+
+BEGIN
+  choice := ENTIER(n * RandomNumbers.Uniform());
+  RETURN choice;
+END GenerateNum;
+
+PROCEDURE ReadNumbers;
+
+VAR
+  i : INTEGER;
+  x, num, range : LONGINT;
+
+BEGIN
+  RandomNumbers.InitSeed(300);
+
+  Out.String("Input: "); Out.Ln;
+  Out.String(" adding ... ");
+  range := 5000;
+
+  FOR i := 1 TO MaxN DO
+    num := GenerateNum(range);
+    Out.Int(num, 5);
+    a[i] := num;
+  END;
+
+  Out.Ln;
+END ReadNumbers;
+
+PROCEDURE DisplayNumbers(a : array1);
+
+VAR
+  i, width : INTEGER;
+  num : LONGINT;
+
+BEGIN
+  width := -1;
+
+  Out.Ln;
+  Out.String("Output: ");
+  Out.Ln;
+
+  FOR i := 1 TO MaxN - 1 DO
+    num := (a[i]);
+    width := width + 1;
+    IF width MOD 20 = 0 THEN Out.Ln END;
+	Out.Int(num, 5);
+  END;
+
+  Out.Ln;
+END DisplayNumbers;
+
+
+PROCEDURE ShellSort; (* ADenS2_Sorts *)
+
+CONST T = 4;
+
+VAR
+  i, j, k, m, s: INTEGER;
+  n: INTEGER;
+  x: Item;
+  h: ARRAY T OF INTEGER;
+
+BEGIN
+  n := MaxN;
+  Out.Ln;
+  Out.String("Sorting ... ");
+
+  h[0] := 9; h[1] := 5; h[2] := 3; h[3] := 1;
+  FOR m := 0 TO T-1 DO
+    k := h[m];
+    FOR i := k TO n-1 DO
+      x := a[i]; j := i-k;
+      WHILE (j &gt;= k) &amp; (x &lt; a[j]) DO
+        a[j+k] := a[j]; j := j-k
+      END;
+      IF (j &gt;= k) OR (x &lt;= a[j]) THEN
+        a[j+k] := x
+      ELSE
+        a[j+k] := a[j];
+        a[j] := x
+      END
+    END
+  END;
+
+  Out.String("Done.");
+  Out.Ln;
+END ShellSort;
+
+BEGIN
+  Out.String("Sorting numbers with a Shell sort"); Out.Ln;
+  Out.Ln;
+  ReadNumbers();
+  DisplayNumbers(a);
+  ShellSort();
+  DisplayNumbers(a);
+  Out.Ln;
+  Out.String("Finished.");
+  Out.Ln;
+END sample003.
+
+(* $Log: sample003.mod,v $
+ * Revision 0.22  2024/03/07 18:36:03  kc4zvw
+ * Added more comments and printed output
+ * *)
+
+(* End of File *)
+  </pre>
+  </div>
+
+  <p>The output of the program : sample003.mod ...</p>
+  
+  <div class="www_code">
+  <pre>
+~kc4zvw/Oberon: ./sample003
+Sorting numbers with a Shell sort
+
+Input:
+ adding ...    11 2306 3407 2975 4150 3438  566 3297 3944 2039  253 4124 1448 1858  192 4550 1724 1547  123  263 1228  159 3464  654 4250  393 2947  878 3999 1785  481 3297 3679 1196 4122 2351 3957 4615 1556 3008  558 3825 3990   33 2277 4028 2452 2060 4064 4617
+
+Output:
+
+   11 2306 3407 2975 4150 3438  566 3297 3944 2039  253 4124 1448 1858  192 4550 1724 1547  123  263
+ 1228  159 3464  654 4250  393 2947  878 3999 1785  481 3297 3679 1196 4122 2351 3957 4615 1556 3008
+  558 3825 3990   33 2277 4028 2452 2060 4064
+
+Sorting ... Done.
+
+Output:
+
+   11   33  123  159  192  253  263  393  481  558  566  654  878 1196 1228 1448 1547 1556 1724 1785
+ 1858 2039 2060 2277 2306 2351 2452 2947 2975 3008 3297 3297 3407 3438 3464 3679 3825 3944 3957 3990
+ 3999 4028 4064 4122 4124 4150 4250 4550 4615
+
+Finished.
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Resources</h2>
+
+  <p>How to get started learning the Oberon Project ...</p>
+
+  <ol>
+    <li><a href="https://en.wikibooks.org/wiki/Oberon/Beginning_as_a_Novice">Oberon/Beginning as a Novice</a> &mdash; on WikiBooks
+    <li><a href="/">A</a> &mdash; (unkown) ...
+    <li><a href="/">B</a> &mdash; (unkown) ...
+    <li><a href="/">C</a> &mdash; (unkown) ...
+    <li><a href="http://exaprog.com/eng/index.html">Exact Programs</a> &mdash; Oberon-07M compiler ...
+    <li>Links &mdash; (blank) ...
+  </ol>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <ul>
+    <li>Links ...
+    <li>Links ...
+    <li>Links ...
+  </ul>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">&quot;A foolish faith in authority is the worst enemy of truth.&quot;<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Thursday, March 07, 2024 at 13:58:19 PM (EST)</span>
+</body>
+</html>

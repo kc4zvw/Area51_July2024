@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Racket">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The ALGOL 68 examples</title>
+
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The ALGOL 68 Project</h1>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+  <p>Add something here ...</p>
+
+  <pre>
+
+~kc4zvw: cat hello.alg
+COMMENT
+ ! Program: hello
+ ! Author: David Billsbrough &mdash; <a href="mailto:billsbrough@gmail.com">E-mail</a>
+ !
+COMMENT
+
+printf(($gl$, "Hello World!"))
+
+# End of File #
+~kc4zvw:
+
+  </pre>
+
+  <h2 class="www_subsection">Build Notes</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Parallel sieve of Erathostenes</h2>
+
+  <p>Add something here ...</p>
+
+  <pre>
+
+COMMENT
+
+	This is a gratuitously parallel implementation of the sieve of Eratosthenes after
+	a program contributed by Lawrence D’Oliveiro; the number of primes it can output is
+	limited only by the number of threads 'a68g' can create.
+
+COMMENT
+
+PR heap=32M PR
+PR frame=1M PR
+
+MODE SIEVER = STRUCT (SEMA full, empty, REF INT n);
+PROC make siever = SIEVER: (LEVEL 0, LEVEL 1, NEW INT);
+
+PROC start siever = (SIEVER s, INT n) VOID:
+	(n MOD 2 /= 0 | DOWN empty OF s; n OF s := n; UP full OF s);
+
+PROC next unmarked = (SIEVER s) INT:
+	(DOWN full OF s; INT n = n OF s; UP empty OF s; n);
+
+PROC sieve = (SIEVER current) VOID:
+	(INT n = next unmarked (current);
+	print ((whole (n, -int width), new line));
+	SIEVER new = make siever;
+	PAR (
+		DO IF INT i = next unmarked (current);
+			i MOD n /= 0
+			THEN start siever (new, i)
+			FI
+		OD,
+		sieve (new)
+	)
+);
+
+SIEVER first = make siever;
+INT n := 1;
+
+PAR (DO n PLUSAB 1; start siever (first, n) OD, sieve (first))
+
+# EOF #
+  </pre>
+
+
+  <h2 class="www_subsection">Summary</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <br>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Thursday, May 23, 2024 at 08:46:14 AM (EDT)</span>
+</body>
+</html>

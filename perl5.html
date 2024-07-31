@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Perl 5">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The Perl examples</title>
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The Perl 5 Project</h1>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+
+
+  <h2 class="www_subsection">Example Number One</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">An example fisher_yates_shuffle in Perl</h2>
+
+  <p>A test program from the O&rsquo;Reilly&reg; Perl Cookbook.</p>
+
+  <p>Formatted copy of <a href="example/sol4-17.pl.html">program</a></p>
+
+  <div class="www_code">
+  <pre>
+
+#!/usr/bin/env perl
+#
+# $Id: sol4-17.pl,v 0.05 2024/04/05 16:19:18 kc4zvw Exp kc4zvw $
+
+use 5.036_003;
+use strict;
+use warnings;
+
+# fisher_yates_shuffle( \@array ) : generate a random permutation
+# of @array in place
+
+sub fisher_yates_shuffle {
+        my $array = shift;
+        my $i;
+
+        for ($i = @$array; --$i;) {
+                my $j = int rand ($i + 1);
+                next if $i == $j;
+                @$array[$i, $j] = @$array[$j, $i];
+        }
+}
+
+
+####################
+### main program ###
+####################
+
+my @array = qw/ 1 2 3 4 5 6 7 8 9 10 11 12 /;
+my $path_to_file = "alpha.txt";
+my $handle;
+
+unless (open $handle, "&lt;:encoding(ascii)", $path_to_file) {
+        print STDERR "Could not open file '$path_to_file': $!\n";
+        # we return 'undefined', we could also 'die' or 'croak'
+        die "No reason to continue : $!\n";
+        #return undef
+}
+
+
+chomp(my @lines = &lt;$handle&gt;);
+
+unless (close $handle) {
+        # what does it mean if close yields an error and you are just reading?
+        print STDERR "Don't care error while closing - '$path_to_file'.\n";
+        warn "contining - $!\n";
+}
+
+# assuming @array is your array:
+print join(", ", @array);
+print "\n";
+fisher_yates_shuffle(\@array);
+print join(", ", @array);
+print "\n\n";
+
+# assuming @a is your array:
+my @a = qw(abc def ghi jkl mno pqr stu vw xyz);
+print "@a";
+print "\n";
+fisher_yates_shuffle(\@a);
+print "@a";
+print "\n\n";
+
+# assuming @lines is your array:
+print "@lines";
+print "\n";
+fisher_yates_shuffle(\@lines);
+print "@lines";
+print "\n\n";
+
+# End of File
+
+  </pre>
+  </div>
+
+  <p>The output ...</p>
+  
+  <div class="www_code">
+  <pre>
+
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+8, 12, 7, 11, 9, 4, 3, 10, 2, 1, 6, 5
+
+abc def ghi jkl mno pqr stu vw xyz
+stu abc mno pqr vw jkl ghi def xyz
+
+alpha bravo charlie delta echo foxtrot golf hotel india
+foxtrot echo hotel india bravo delta alpha golf charlie
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Example Number Four : a Shellsort</h2>
+
+  <p>The source code for sample003.pl</p>
+  
+  <div class="www_code">
+  <pre>
+
+  </pre>
+  </div>
+
+  <p>The output of the program : sample003.pl ...</p>
+  
+  <div class="www_code">
+  <pre>
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Resources</h2>
+
+  <p>How to get started learning the Perl Project ...</p>
+
+  <ol>
+    <li><a href="/">A</a> &mdash; (unkown) ...
+    <li><a href="/">B</a> &mdash; (unkown) ...
+    <li><a href="/">C</a> &mdash; (unkown) ...
+    <li>Links &mdash; (blank) ...
+  </ol>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <ul>
+    <li>Links ...
+    <li>Links ...
+    <li>Links ...
+  </ul>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">&quot;A foolish faith in authority is the worst enemy of truth.&quot;<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Friday, April 05, 2024 at 11:47:42 AM (EDT)</span>
+</body>
+</html>

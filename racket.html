@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Racket">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The Racket Examples</title>
+
+  <!-- <style>
+    div.quote { margin: 0 auto; text-align: center; }
+    span.quote2 { color: blue; text-align: center; width: 90%; }
+  </style> -->
+</head>
+
+<body>
+  <a href="/">HOME</a>
+
+  <br><br>
+  <h1 class="www_title">The Racket Examples</h1>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Build Notes</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Parallel sieve of Erathostenes</h2>
+
+  <p>Add something here ...</p>
+
+  <pre>
+
+  </pre>
+
+  <h2 class="www_subsection">The 'HEAPSORT' Algorithm</h2>
+
+  <p>Add something here ...</p>
+
+<pre>
+#lang racket
+(require (only-in srfi/43 vector-swap!))
+
+(define (heap-sort! xs)
+  (define (ref i) (vector-ref xs i))
+  (define (swap! i j) (vector-swap! xs i j))
+  (define size (vector-length xs))
+  
+  (define (sift-down! r end)
+    (define c (+ (* 2 r) 1))
+    (define c+1 (+ c 1))
+    (when (&lt;= c end)
+      (define child 
+        (if (and (&lt;= c+1 end) (&lt; (ref c) (ref c+1)))
+            c+1 c))
+      (when (&lt; (ref r) (ref child))
+        (swap! r child))
+      (sift-down! child end)))
+  
+  (for ([i (in-range (quotient (- size 2) 2) -1 -1)])
+    (sift-down! i (- size 1)))
+  
+  (for ([end (in-range (- size 1) 0 -1)])
+    (swap! 0 end)
+    (sift-down! 0 (- end 1)))
+  xs)
+</pre>
+
+  <p>The complete <a href="files/uriah.rkt">source file</a> for a Heapsort in the Racket programmming language.</p>
+  <pre>
+
+kc4zvw@www:~$ racket uriah.rkt
+'done
+'#(2 4 5 7 8 9 13 14 15 16 17 20 23 24 27 28 31 34 35 36 39 40 43 45 47 48 49 51 55 56 57 59 61 62 65 68 70 71 72 73 74 76 77 78 79 82 85 87 88 89)
+kc4zvw@www:~$
+
+  </pre>
+
+  <h2 class="www_subsection">Summary</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">"A foolish faith in authority is the worst enemy of truth."<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+
+  <hr>
+  <span class="www_footer">Revised: Thursday, April 04, 2024 at 01:00:43 AM (EDT)</span>
+</body>
+</html>

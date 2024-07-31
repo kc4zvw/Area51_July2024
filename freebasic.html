@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence and the sweat of our text editor/browser">
+  <meta name="Description" content="programming examples for FreeBASIC">
+  <meta name="Author" content="David Billsbrough">
+  
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>FreeBASIC Examples</title>
+
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The FreeBASIC Project</h1>
+
+  <p>The <a href="https://www.freebasic.net/">FreeBASIC</a> is a free/open source (GPL), BASIC compiler for Microsoft Windows, DOS and Linux.</p>
+
+
+~kc4zvw:
+
+  </pre>
+  </div>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+'
+' program : hello.bas
+'
+' $Id:$
+'
+
+dim x as double, y as double, z as double
+dim sin_x as Double, cos_x as Double, tan_x as Double
+dim w as double
+dim i as integer
+
+print
+print "Hello World!"
+print
+
+print "  Count         Value: x      sine(x)        cos(x)       tan(x) "
+print " -------       ----------    ---------      --------     --------"
+
+for i = 1 to 20
+  x = Cdbl(i / 50.0)
+  sin_x = sin(x)
+  cos_x = cos(x)
+  tan_x = tan(x)
+
+  print using " #####         ###.####      ###.####     ###.####     ###.#### "; i; x; sin_x; cos_x; tan_x
+next i
+
+print:print:print
+
+print "Compile Date: " &amp; __DATE_ISO__
+print
+
+if __DATE_ISO__ &lt; "2022-12-25" then
+	print "Compiled before Christmas day 2022"
+else
+	print "Compiled after Christmas day 2022"
+end if
+
+if __DATE_ISO__ &lt; "2023-12-25" then
+	print "Compiled before Christmas day 2023"
+else
+	print "Compiled after Christmas day 2023"
+end if
+
+#include "vbcompat.bi"
+
+dim s as String, d1 as Double, d2 as Double
+
+s = "09/27/1959 00:00:00"
+
+if IsDate( s ) then
+	d1 = DateValue( s )
+	d2 = Now()
+
+	print
+	print "You are " &amp; DateDiff( "yyyy", d1, d2 ) &amp; " years old."
+	print "You are " &amp; DateDiff( "d", d1, d2 ) &amp; " days old."
+	print "You are " &amp; DateDiff( "s", d1, d2 ) &amp; " seconds old"
+else
+	print "Invalid date"
+end if
+
+dim time1 as Double = DateSerial(2023, 12, 25) + TimeSerial(7, 30, 00)
+
+print
+print format(time1, "yyyy/mm/dd hh:mm:ss "); Year(time1)
+print format(d1, "yyyy/mm/dd hh:mm:ss "); Year(d1)
+print format(d2, "yyyy/mm/dd hh:mm:ss "); Year(d2)
+
+end
+
+' *** End Of File ***
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Build Notes</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">The Heapsort Example</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Shellsort Algorithm</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code"><pre>
+
+'
+' Author: David B. &lt;billsbrough@gmail.com&gt;
+' Language: FreeBASIC
+' Warranty: None
+' Version: $Revision:$
+'
+' $Id: shellsort.bas,v 0.11 2024/03/08 05:59:29 kc4zvw Exp kc4zvw $
+'
+
+' ========== ----- ==========[ SUBROUTINES ] ========== ----- ==========
+
+rem *** Modified Bubble code
+rem Version 21-Oct-2016
+
+' Sort from lower bound to the highter bound
+' Array's can have subscript range from -2147483648 to +2147483647
+
+sub shellsort(s() as Long)
+
+    dim as Long lb = LBound(s)
+    dim as Long ub = UBound(s)
+    dim as Long done, i, inc = ub - lb
+
+    do
+        inc = Int(inc / 2.2)
+        if inc &lt; 1 then inc = 1
+
+        do
+            done = 0
+            for i = lb To ub - inc
+                ' replace "&gt;" with "&lt;" for downwards sort
+                if s(i) &gt; s(i + inc) then
+                    swap s(i), s(i + inc)
+                    done = 1
+                end if
+            next
+        loop until done = 0
+    loop until inc = 1
+end sub
+
+' *****  ========== ----- ========== *****
+'
+'
+'
+
+sub display_array(s() as Long)
+    dim as Long top = LBound(s)
+    dim as Long bottom = UBound(s)
+	dim as Long i, j = 1 
+
+	for i = top to bottom 
+		print using "####"; s(i); 
+		if (j mod 20) = 0 then print
+		j = j + 1
+	next 
+	print
+end sub
+
+' *****  ========== ----- ========== *****
+
+' Empty keyboard buffer
+
+sub do_continue()
+	while InKey &lt;&gt; "" : wend
+	print : print "Press any key to end program."
+	sleep
+end sub
+
+' ========== ----- ==========[ MAIN ] ========== ----- ==========
+
+' Compile with: fbc -s console
+' For boundry checks on array's compile with: fbc -s console -exx
+
+dim as Long i, array(1 to 80)
+dim as Long a = LBound(array), b = UBound(array)
+
+Randomize Timer
+
+for i = a to b
+	array(i) = i
+next
+
+for i = a To b ' little shuffle
+	swap array(i), array(Int(Rnd * (b - a + 1)) + a)
+next
+
+print
+print "Unsorted:"
+display_array(array())
+
+shellsort(array())  ' sort the array
+
+print
+print "Sorted:"
+display_array(array())
+do_continue
+
+end
+
+' * $Log: shellsort.bas,v $
+' * Revision 0.11  2024/03/08 05:59:29  kc4zvw
+' * Changed main program to sort a larger set of numbers
+' *
+
+' ***** End of File *****
+  </pre>
+  </div>
+
+  <p>Output from program : shellsort.bas</p>
+
+  <div class="www_code">
+  <pre>
+
+Unsorted:
+  54   8   9  48   7  41  23  27  66  39  51  46  69  17  19  34  78  11  80  52
+  79  38  22  26  13  57  47  35  70  64  44  42   5  29  50   2  15  24  49  14
+  62  67  25  28  33  61  56  68  65  36  74  76  43  18  32  40  75  12  16   1
+   6  63  20   4  59  10  37  21  60  31  73  45  58  72  77  71   3  55  53  30
+
+
+Sorted:
+   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40
+  41  42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58  59  60
+  61  62  63  64  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80
+
+
+Press any key to end program.
+  </pre></div>
+
+  <h2 class="www_subsection">Header 4</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">&quot;A foolish faith in authority is the worst enemy of truth.&quot;<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Friday, March 08, 2024 at 01:20:47 AM (EST)</span>
+</body>
+</html>

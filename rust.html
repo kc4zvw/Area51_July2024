@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Description" content="Programming examples in the Rust language">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>Rust Examples</title>
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The Rust Project</h1>
+
+
+  <!-- <pre> ~kc4zvw: </pre> -->
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Header One</h2>
+
+  <p>Add something here ...</p>
+
+  <pre>
+
+# EOF #
+  </pre>
+
+  <h2 class="www_subsection">Another Topic</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">The 'HEAPSORT' Algorithm</h2>
+
+  <p>The Output ...</p>
+
+  <div class="www_code">
+  <pre>
+
+kc4zvw@www: ./heapsort
+
+An example of the 'heapsort' sorting algorithm
+
+The array is [12, 11, 13, 5, 6, 7]
+The length of the array is: 6
+The array is [5, 6, 7, 11, 12, 13]
+
+Finished.
+
+kc4zvw@www:
+
+  </pre>
+  </div>
+
+  <p>The source code:</p>
+  <div class="www_code">
+  <pre>
+//
+// $Id:$
+//
+
+
+pub fn heap_sort&lt;T: Ord&gt;>(arr: &amp;mut [T]) {
+    if arr.len() &lt;= 1 {
+        return; // already sorted
+    }
+ 
+    heapify(arr);
+ 
+    for end in (1..arr.len()).rev() {
+        arr.swap(0, end);
+        move_down(&amp;mut arr[..end], 0);
+    }
+}
+ 
+/// Convert `arr` into a max heap.
+fn heapify&lt;T: Ord&gt;(arr: &amp;mut [T]) {
+    let last_parent = (arr.len() - 2) / 2;
+    for i in (0..=last_parent).rev() {
+        move_down(arr, i);
+    }
+}
+ 
+/// Move the element at `root` down until `arr` is a max heap again.
+///
+/// This assumes that the subtrees under `root` are valid max heaps already.
+fn move_down&lt;T: Ordi&gt;(arr: &amp;mut [T], mut root: usize) {
+    let last = arr.len() - 1;
+    loop {
+        let left = 2 * root + 1;
+        if left &gt; last {
+            break;
+        }
+        let right = left + 1;
+        let max = if right &lt;= last &amp;&amp; arr[right] &gt; arr[left] {
+            right
+        } else {
+            left
+        };
+ 
+        if arr[max] &gt; arr[root] {
+            arr.swap(root, max);
+        }
+        root = max;
+    }
+}
+ 
+#[cfg(test)]
+mod tests {
+    use super::*;
+ 
+    #[test]
+    fn empty() {
+        let mut arr: Vec&lt;i32&gt; = Vec::new();
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;[]);
+    }
+ 
+    #[test]
+    fn single_element() {
+        let mut arr = vec![1];
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;[1]);
+    }
+ 
+    #[test]
+    fn sorted_array() {
+        let mut arr = vec![1, 2, 3, 4];
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;[1, 2, 3, 4]);
+    }
+ 
+    #[test]
+    fn unsorted_array() {
+        let mut arr = vec![3, 4, 2, 1];
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;[1, 2, 3, 4]);
+    }
+ 
+    #[test]
+    fn odd_number_of_elements() {
+        let mut arr = vec![3, 4, 2, 1, 7];
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;[1, 2, 3, 4, 7]);
+    }
+ 
+    #[test]
+    fn repeated_elements() {
+        let mut arr = vec![542, 542, 542, 542];
+        heap_sort(&amp;mut arr);
+        assert_eq!(&amp;arr, &amp;vec![542, 542, 542, 542]);
+    }
+}
+
+/// The main program starts here!
+
+fn main() {
+
+   let mut arr2 = [12, 11, 13, 5, 6, 7];
+
+   println!("An example of the 'heapsort' algorithm");
+   println!(" ");
+   println!("The array is {:?}", arr2);
+
+   println!("The length of the array is: {}", arr2.len());
+   heap_sort(&amp;mut arr2);
+   println!("The array is {:?}", arr2);
+   println!("");
+   println!("Finished.");
+}
+
+/* End of File */
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <ol class="lower">
+    <li>Listing
+    <li>Listing
+    <li>Listing
+    <li>Listing
+    <li>Listing
+  </ol>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">"A foolish faith in authority is the worst enemy of truth."<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+
+  <hr>
+  <span class="www_footer">Revised: Tuesday, May 28, 2024 at 04:25:41 AM (EDT)</span>
+</body>
+</html>

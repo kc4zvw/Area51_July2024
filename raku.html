@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for Racket">
+  <meta name="Author" content="David Billsbrough">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The Raku examples</title>
+
+</head>
+
+<body>
+  <a href="/">HOME</a>
+
+  <br>
+  <h1 class="www_title">The Raku or Perl 6 Project</h1>
+
+  <h2 class="www_sectiontitle">Introduction</h2>
+
+  <p>Add something here ...</a>
+
+  <div class="www_code">
+  <pre>
+
+~kc4zvw:
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Notes</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">Header 2</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Header 3</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">The 'Shellsort' Algorithm</h2>
+
+  <p>Add something here ...</p>
+
+  <div class="www_code">
+  <pre>
+
+sub shell_sort ( @a is copy ) {
+    loop ( my $gap = (@a/2).round; $gap &gt; 0; $gap = ( $gap * 5 / 11 ).round ) {
+        for $gap .. @a.end -&gt; $i {
+            my $temp = @a[$i];
+
+            my $j;
+            loop ( $j = $i; $j &gt;= $gap; $j -= $gap ) {
+                my $v = @a[$j - $gap];
+                last if $v i&lt;= $temp;
+                @a[$j] = $v;
+            }
+
+            @a[$j] = $temp;
+        }
+    }
+    return @a;
+}
+my @data = 22, 7, 2, -5, 8, 4;
+say 'input  = ' ~ @data;
+say 'output = ' ~ @data.&shell_sort;
+
+  </pre>
+  </div>
+
+  <p>Add something here ...</p>
+  <div class="www_code">
+  <pre>
+  input  = 22 7 2 -5 8 4
+  output = -5 2 4 7 8 22
+  </pre>
+  </div>
+  <br>
+  <br>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <ol>
+    <li>Links ...
+    <li>Links ...
+    <li>Links ...
+  </ol>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">"A foolish faith in authority is the worst enemy of truth."<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Thursday, March 07, 2024 at 14:11:06 PM (EST)</span>
+</body>
+</html>

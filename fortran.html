@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Intelligence,and the sweat of our browser">
+  <meta name="Description" content="programming examples for FORTRAN">
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <title>The FORTRAN examples</title>
+
+</head>
+
+<body>
+  <a href="/">HOME</a><br>
+
+  <br>
+  <h1 class="www_title">The FORTRAN-90/95 Project</h1>
+
+  <p>Add something here ...</p>
+
+  <pre>
+
+~kc4zvw:
+
+  </pre>
+
+  <h2 class="www_sectiontitle">Notes</h2>
+
+  <p>Here are some links to online docs:</p>
+
+  <ol>
+    <li><a href="https://icl.utk.edu/~mgates3/docs/fortran.html">Fortran 90/95 reference</a>
+    <li><a href="https://gcc.gnu.org/onlinedocs/gfortran/index.html#SEC_Contents">GFortran reference</a>
+    <li><a href="https://icl.utk.edu/~mgates3/docs/fortran.html">Fortran 90/95 reference</a>
+  </ol>
+
+  <h2 class="www_subsection">Example One: looping, strings, and time/date</h2>
+
+  <p>Sample run to example1.f90 ...</p>
+
+  <div class="www_code">
+    <pre>
+$ ./example1
+
+Hello World!
+
+     Count       Var x      sin(x)      cos(x)      tan(x)
+         1       0.020       0.020       1.000       0.020
+         2       0.040       0.040       0.999       0.040
+         3       0.060       0.060       0.998       0.060
+         4       0.080       0.080       0.997       0.080
+         5       0.100       0.100       0.995       0.100
+         6       0.120       0.120       0.993       0.121
+         7       0.140       0.140       0.990       0.141
+         8       0.160       0.159       0.987       0.161
+         9       0.180       0.179       0.984       0.182
+        10       0.200       0.199       0.980       0.203
+        11       0.220       0.218       0.976       0.224
+        12       0.240       0.238       0.971       0.245
+        13       0.260       0.257       0.966       0.266
+        14       0.280       0.276       0.961       0.288
+        15       0.300       0.296       0.955       0.309
+        16       0.320       0.315       0.949       0.331
+        17       0.340       0.333       0.943       0.354
+        18       0.360       0.352       0.936       0.376
+        19       0.380       0.371       0.929       0.399
+        20       0.400       0.389       0.921       0.423
+
+Date: 20230820  Time: 054558.357  Zone: -0400
+
+Program was started on Sun Aug 20 05:45:58 2023
+
+Finished.
+    </pre>
+  </div>
+
+  <p>Source code to example1.f90 ...</p>
+
+  <div class="www_code">
+    <pre>
+!
+! program: demo a hello world example
+!
+!  $Id: example_1.f95,v 0.3 2023/08/20 09:51:04 kc4zvw Exp kc4zvw $
+!
+! vim: nowrap: tabstop=3:
+
+
+program greetings
+   implicit none
+
+   character(len=10):: time
+   character(len=20):: str, blank0
+   character(len=30) :: date_str
+   character(len=5):: zone
+   character(len=8):: date
+   integer(8) :: j
+   integer, dimension(8):: values
+   integer:: i, step = 1, total = 20
+   real:: x, sin_x, cos_x, tan_x
+
+   str = trim("Hello World!")
+   blank0 = trim(" ")
+
+   print *, blank0
+   print 100, str
+   print *
+
+   print 200, "Count", "Var x", "sin(x)", "cos(x)", "tan(x)"
+
+   do i = 1, total, step
+      x = float(i) / 50.0
+      sin_x = sin(x)
+      cos_x = cos(x)
+      tan_x = tan(x)
+      print 300, i, x, sin_x, cos_x, tan_x
+   enddo
+
+   ! using keyword arguments
+   call date_and_time(date, time, zone, values)
+
+   print *
+   print 400, date, time, zone
+
+   ! Do something, print a formatted date
+   j = time8()
+   call ctime(j, date_str)
+
+   print *
+   print 600, date_str
+   print *
+   print 700
+
+100  format(A20)
+200  format(A10,A12,A12,A12,A12)
+300  format(I10,4F12.3)
+400  format('Date: ',A,2X,'Time: ',A,2X,'Zone: ',A)
+500  format(8I5)
+600  format('Program was started on ', A)
+700  format('Finished.')
+
+end program greetings
+
+!
+! %%%%% End of File %%%%%
+    </pre>
+  </div>
+
+  <h2 class="www_subsection">Header 3</h2>
+
+  <p>Add something here ...</p>
+
+  <h2 class="www_subsection">The 'HeapSort' Algorithm</h2>
+
+  <p>Sample run to heapsort.f90 ...</p>
+
+  <div class="www_code">
+  <pre>
+
+A program to heapsort an array of real numbers.
+
+Unsorted array:
+
+     0.358408     0.599746     0.329966     0.207517     0.703741
+     0.582223     0.985021     0.626306     0.911676     0.233120
+     0.227876     0.379826     0.954987     0.942881     0.339799
+     0.000142     0.918284     0.683852     0.382026     0.134266
+     0.665749     0.622566     0.116516     0.745471     0.884241
+     0.530282     0.004936     0.357033     0.142322     0.601230
+     0.307378     0.602164     0.596452     0.788840     0.712550
+     0.068321     0.394793     0.144145     0.904997     0.551590
+     0.086836     0.598405     0.819727     0.836621     0.379922
+     0.772235     0.556733     0.153416     0.664931     0.540930
+
+Sorted array:
+
+     0.000142     0.004936     0.068321     0.086836     0.116516
+     0.134266     0.142322     0.144145     0.153416     0.207517
+     0.227876     0.233120     0.307378     0.329966     0.339799
+     0.357033     0.358408     0.379826     0.379922     0.382026
+     0.394793     0.530282     0.540930     0.551590     0.556733
+     0.582223     0.596452     0.598405     0.599746     0.601230
+     0.602164     0.622566     0.626306     0.664931     0.665749
+     0.683852     0.703741     0.712550     0.745471     0.772235
+     0.788840     0.819727     0.836621     0.884241     0.904997
+     0.911676     0.918284     0.942881     0.954987     0.985021
+
+End of program.
+
+  </pre>
+  </div>
+
+
+  <p>Source code to heapsort.f90</p>
+
+  <div class="www_code">
+  <pre>
+
+
+C   *************************************************************************
+C   ***
+C   ***    Author: David Billsbrough
+C   ***   Created: Monday, August 21, 2023 at 12:18:44 PM (EDT)
+C   ***   License: GNU General Public License -- version 2
+C   ***   Version: $Revision: $
+C   ***  Warranty: None
+C   ***   Purpose: An example of the heapsort algorithm in FORTRAN-90
+C   ***
+C   *************************************************************************
+
+
+! $Id: heapsort.f90,v 0.3 2023/03/10 14:15:38 kc4zvw Exp kc4zvw $
+
+program Heapsort_Demo
+
+    implicit none
+
+    integer, parameter:: num = 50
+    real:: array(num)
+    character(len = 60):: title_str, footer
+    character(len = 30):: header1, header2
+
+    call random_seed
+    call random_number(array)
+
+    title_str = trim("A program to heapsort an array of real numbers.")
+    header1 = trim("Unsorted array:")
+    header2 = trim("Sorted array:")
+    footer = trim("End of program.")
+
+    print *
+    print 100, title_str
+    print *
+    print 200, header1
+    call display_numbers(array)
+    call heapsort(array)
+    print 200, header2
+    call display_numbers(array)
+    print 100, footer
+
+100  format(A60)
+200  format(A30/)
+
+contains
+
+subroutine heapsort(a)
+
+    real, intent(in out):: a(0:)
+    integer:: start, n, bottom
+    real:: temp
+
+    n = size(a)
+    do start = (n - 2) / 2, 0, -1
+        call siftdown(a, start, n);
+    end do
+   
+    do bottom = n - 1, 1, -1
+        temp = a(0)
+        a(0) = a(bottom)
+        a(bottom) = temp;
+        call siftdown(a, 0, bottom)
+    end do
+
+end subroutine heapsort
+
+subroutine siftdown(a, start, bottom)
+  
+    real, intent(in out):: a(0:)
+    integer, intent(in):: start, bottom
+    integer:: child, root
+    real:: temp
+
+    root = start
+    do while (root * 2 + 1 &lt; bottom)
+        child = root * 2 + 1
+
+        if (child + 1 &lt; bottom) then
+            if (a(child) &lt; a(child + 1)) child = child + 1
+        end if
+    
+        if (a(root) &lt; a(child)) then
+            temp = a(child)
+            a(child) = a(root)
+            a(root) = temp
+            root = child
+        else
+            return
+        end if  
+    end do      
+    
+end subroutine siftdown
+
+subroutine display_numbers(a)
+
+    real, intent(in out) :: a(0:)
+    integer :: start, n
+    
+    n = size(a)
+    do start = 0, n - 1, 1
+        write(*, 100, advance='no') a(start)
+        if (mod(start, 5) == 4) write(*,*)
+    end do
+    write(*,*)
+
+100  format(' ', F12.6)
+
+end subroutine display_numbers
+
+end program Heapsort_Demo
+
+! ***** End of File *****
+  </pre>
+  </div>
+
+  <h2 class="www_subsection">Miscellaneous</h2>
+
+  <p>Add something here ...</p>
+
+  <br>
+  <br>
+  <br>
+  <footer>
+    <div class="quote">
+      <span class="quote2">"A foolish faith in authority is the worst enemy of truth."<br> -Albert Einstein</span>
+    </div>
+  </footer>
+  <br>
+  <br>
+  <hr>
+  <span class="www_footer">Revised: Thursday, May 23, 2024 at 08:25:29 AM (EDT)</span>
+</body>
+</html>
